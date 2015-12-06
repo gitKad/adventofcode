@@ -1,11 +1,23 @@
 {
-  "name": "day1gold",
+  "name": "days",
   "version": "1.0.0",
-  "description": "",
+  "description": "Exercising my rusty development skills with adventofcode.com 2015 using nodejs and TDD if I can find the time to spare",
+  "devDependencies": {
+    "chai":"latest",
+    "mocha":"latest"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "mocha days --recursive"
+    "test": "mocha day1 --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitKad/adventofcode.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gitKad/adventofcode/issues"
+  },
+  "homepage": "https://github.com/gitKad/adventofcode#readme"
 }
