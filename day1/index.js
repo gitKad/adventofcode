@@ -7,6 +7,7 @@ inputLurker.getInput(1, function(input) {
 
 function main(input) {
   floor = 0;
+  enteringBasementAtInstruction = false;
   consumeInstructions(input);
 }
 
@@ -17,16 +18,21 @@ function consumeInstructions(instructions) {
     } else {
       floor--;
     }
+    if (floor == -1 && !hasGoneToTheBasementBefore()) {
+        enteringBasementAtInstruction = (i+1);
+    }
   }
+}
+
+function hasGoneToTheBasementBefore() {
+  return enteringBasementAtInstruction;
 }
 
 function getCurrentFloor() {
   return floor;
 }
 
-
-// Tests
-describe('day1silverstar',function() {
+describe('On day 1, Santa',function() {
 
   beforeEach(function() {
     main('');
@@ -36,63 +42,72 @@ describe('day1silverstar',function() {
     expect(getCurrentFloor()).to.equal(0);
   });
 
-  it('understands go down', function() {
+  it('can go down', function() {
     consumeInstructions(')');
     expect(getCurrentFloor()).to.equal(-1);
   });
 
-  it('understands go up', function() {
+  it('can go up', function() {
     consumeInstructions('(');
     expect(getCurrentFloor()).to.equal(1);
   });
 
-  it('understands example sequence 1', function() {
-    consumeInstructions('(())');
-    expect(getCurrentFloor()).to.equal(0);
-  });
-
-  it('understands example sequence 2', function() {
-    consumeInstructions('()()');
-    expect(getCurrentFloor()).to.equal(0);
-  });
-
-  it('understands example sequence 3', function() {
-    consumeInstructions('(((');
-    expect(getCurrentFloor()).to.equal(3);
-  });
-
-  it('understands example sequence 4', function() {
-    consumeInstructions('(()(()(');
-    expect(getCurrentFloor()).to.equal(3);
-  });
-
-  it('understands example sequence 5', function() {
-    consumeInstructions('))(((((');
-    expect(getCurrentFloor()).to.equal(3);
-  });
-
-  it('can reach the basement level according to example sequence 6', function() {
-    consumeInstructions('())');
-    expect(getCurrentFloor()).to.equal(-1);
-  });
-
-  it('can reach the basement level according to example sequence 7', function() {
+  it('can follow a path', function() {
     consumeInstructions('))(');
     expect(getCurrentFloor()).to.equal(-1);
   });
 
-  it('can reach the basement level according to example sequence 8', function() {
+  it('can remember when he first got into the basement');
+
+  it('enjoys prooving he isn\'t lost following silver star samples', function() {
+    consumeInstructions('(())');
+    expect(getCurrentFloor()).to.equal(0);
+    main('');
+    consumeInstructions('()()');
+    expect(getCurrentFloor()).to.equal(0);
+    main('');
+    consumeInstructions('(((');
+    expect(getCurrentFloor()).to.equal(3);
+    main('');
+    consumeInstructions('(()(()(');
+    expect(getCurrentFloor()).to.equal(3);
+    main('');
+    consumeInstructions('))(((((');
+    expect(getCurrentFloor()).to.equal(3);
+    main('');
+    consumeInstructions('())');
+    expect(getCurrentFloor()).to.equal(-1);
+    main('');
+    consumeInstructions('))(');
+    expect(getCurrentFloor()).to.equal(-1);
+    main('');
     consumeInstructions(')))');
     expect(getCurrentFloor()).to.equal(-3);
-  });
-
-  it('can reach the basement level according to example sequence 9', function() {
+    main('');
     consumeInstructions(')())())');
     expect(getCurrentFloor()).to.equal(-3);
   });
 
-});
+  it('enjoys prooving he solves Alexis\' silver star input', function() {
+    inputLurker.getInput(1, function(input) {
+      main(input);
+      expect(getCurrentFloor()).to.equal(1783);
+    });
+  });
 
-describe('day1goldstar',function() {
+  it('enjoys prooving he isn\'t lost following gold star samples', function() {
+    consumeInstructions(')');
+    expect(hasGoneToTheBasementBefore()).to.equal(1);
+    main('');
+    consumeInstructions('()())');
+    expect(hasGoneToTheBasementBefore()).to.equal(5);
+  });
+
+  it('enjoys prooving he solves Alexis\' gold star input', function() {
+    inputLurker.getInput(1, function(input) {
+      main(input);
+      expect(hasGoneToTheBasementBefore()).to.equal(232);
+    });
+  });
 
 });
