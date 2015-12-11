@@ -17,9 +17,6 @@ function consumeInstructions(instructions) {
     } else {
       floor--;
     }
-    if (floor == -1) {
-       break;
-    }
   }
 }
 
@@ -93,5 +90,9 @@ describe('day1silverstar',function() {
     consumeInstructions(')())())');
     expect(getCurrentFloor()).to.equal(-3);
   });
+
+});
+
+describe('day1goldstar',function() {
 
 });
