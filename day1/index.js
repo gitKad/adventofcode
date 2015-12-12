@@ -6,22 +6,25 @@ inputLurker.getInput(1, function(input) {
 });
 
 function main(input) {
-  floor = 0;
-  enteringBasementAtInstruction = false;
-  consumeInstructions(input);
+  finalFloor = 0;
+  enteringBasementAtInstruction = 0;
+  receiveInstructions(input);
 }
 
-function consumeInstructions(instructions) {
-  for (var i = 0; i < instructions.length; i++) {
-    if (instructions[i] == '(') {
-      floor++;
+function receiveInstructions(instructions) {
+
+  finalFloor = instructions.split('').reduce(function(currentFloor,nextInstruction,step) {
+    if(nextInstruction == '(') {
+      currentFloor++;
     } else {
-      floor--;
+      currentFloor--;
     }
-    if (floor == -1 && !hasGoneToTheBasementBefore()) {
-        enteringBasementAtInstruction = (i+1);
+    if (currentFloor == -1 && !hasGoneToTheBasementBefore()) {
+        enteringBasementAtInstruction = (step+1);
     }
-  }
+    return currentFloor;
+  },0);
+
 }
 
 function hasGoneToTheBasementBefore() {
@@ -29,7 +32,7 @@ function hasGoneToTheBasementBefore() {
 }
 
 function getCurrentFloor() {
-  return floor;
+  return finalFloor;
 }
 
 describe('On day 1, Santa',function() {
@@ -43,48 +46,51 @@ describe('On day 1, Santa',function() {
   });
 
   it('can go down', function() {
-    consumeInstructions(')');
+    receiveInstructions(')');
     expect(getCurrentFloor()).to.equal(-1);
   });
 
   it('can go up', function() {
-    consumeInstructions('(');
+    receiveInstructions('(');
     expect(getCurrentFloor()).to.equal(1);
   });
 
   it('can follow a path', function() {
-    consumeInstructions('))(');
+    receiveInstructions('))(');
     expect(getCurrentFloor()).to.equal(-1);
   });
 
-  it('can remember when he first got into the basement');
+  it('can remember when he first got into the basement',function(){
+    receiveInstructions('())((()))))(((((');
+    expect(hasGoneToTheBasementBefore()).to.equal(3);
+  });
 
   it('enjoys prooving he isn\'t lost following silver star samples', function() {
-    consumeInstructions('(())');
+    receiveInstructions('(())');
     expect(getCurrentFloor()).to.equal(0);
     main('');
-    consumeInstructions('()()');
+    receiveInstructions('()()');
     expect(getCurrentFloor()).to.equal(0);
     main('');
-    consumeInstructions('(((');
+    receiveInstructions('(((');
     expect(getCurrentFloor()).to.equal(3);
     main('');
-    consumeInstructions('(()(()(');
+    receiveInstructions('(()(()(');
     expect(getCurrentFloor()).to.equal(3);
     main('');
-    consumeInstructions('))(((((');
+    receiveInstructions('))(((((');
     expect(getCurrentFloor()).to.equal(3);
     main('');
-    consumeInstructions('())');
+    receiveInstructions('())');
     expect(getCurrentFloor()).to.equal(-1);
     main('');
-    consumeInstructions('))(');
+    receiveInstructions('))(');
     expect(getCurrentFloor()).to.equal(-1);
     main('');
-    consumeInstructions(')))');
+    receiveInstructions(')))');
     expect(getCurrentFloor()).to.equal(-3);
     main('');
-    consumeInstructions(')())())');
+    receiveInstructions(')())())');
     expect(getCurrentFloor()).to.equal(-3);
   });
 
@@ -96,10 +102,10 @@ describe('On day 1, Santa',function() {
   });
 
   it('enjoys prooving he isn\'t lost following gold star samples', function() {
-    consumeInstructions(')');
+    receiveInstructions(')');
     expect(hasGoneToTheBasementBefore()).to.equal(1);
     main('');
-    consumeInstructions('()())');
+    receiveInstructions('()())');
     expect(hasGoneToTheBasementBefore()).to.equal(5);
   });
 
