@@ -14,11 +14,7 @@ function main(input) {
 function receiveInstructions(instructions) {
 
   finalFloor = instructions.split('').reduce(function(currentFloor,nextInstruction,step) {
-    if(nextInstruction == '(') {
-      currentFloor++;
-    } else {
-      currentFloor--;
-    }
+    currentFloor += nextInstruction == '(' ? 1 : -1;
     if (currentFloor == -1 && !hasGoneToTheBasementBefore()) {
         enteringBasementAtInstruction = (step+1);
     }
