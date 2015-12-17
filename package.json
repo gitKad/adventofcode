@@ -9,13 +9,14 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha day1 --recursive",
+    "test": "mocha day7 --recursive",
     "test1": "mocha day1 --recursive",
     "test2": "mocha day2 --recursive",
     "test3": "mocha day3 --recursive",
     "test4": "mocha day4 --recursive",
     "test5": "mocha day5 --recursive",
-    "test6": "mocha day6 --recursive"
+    "test6": "mocha day6 --recursive",
+    "test7": "mocha day7 --recursive"
   },
   "repository": {
     "type": "git",

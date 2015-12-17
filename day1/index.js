@@ -7,7 +7,7 @@ inputLurker.getInput(1, function(input) {
 
 function main(input) {
   finalFloor = 0;
-  enteringBasementAtInstruction = 0;
+  enteringBasementAtStep = 0;
   receiveInstructions(input);
 }
 
@@ -16,7 +16,7 @@ function receiveInstructions(instructions) {
   finalFloor = instructions.split('').reduce(function(currentFloor,nextInstruction,step) {
     currentFloor += nextInstruction == '(' ? 1 : -1;
     if (currentFloor == -1 && !hasGoneToTheBasementBefore()) {
-        enteringBasementAtInstruction = (step+1);
+        enteringBasementAtStep = (step+1);
     }
     return currentFloor;
   },0);
@@ -24,7 +24,7 @@ function receiveInstructions(instructions) {
 }
 
 function hasGoneToTheBasementBefore() {
-  return enteringBasementAtInstruction;
+  return enteringBasementAtStep;
 }
 
 function getCurrentFloor() {
