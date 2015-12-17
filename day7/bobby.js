@@ -66,8 +66,9 @@ Bobby.prototype.appliesInstruction = function (wiresObject, instruction) {
   }
 
   // checks if every properties are numbers
-  var propertiesAreNumbers = properties.reduce(function(a,b){
-    return (a.test(/\d+/g) && b.test(/\d+/g));
+  var propertiesAreNumbers = properties.reduce(function(a,b) {
+    var patt = new RegExp("/\d+/g");
+    return (patt.test(a) && patt.test(b));
   }, '1' );
 
   if (propertiesAreNumbers)
