@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha 2016 --recursive"
+    "test": "mocha day7 --recursive"
   },
   "repository": {
     "type": "git",
