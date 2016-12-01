@@ -1,5 +1,5 @@
 var expect = require('chai').expect,
-    inputLurker = require('../inputLurker');
+    inputLurker = require('./inputLurker.js');
 
 describe('Environment', function () {
 
