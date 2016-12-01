@@ -43,7 +43,13 @@ describe('slackbot', function() {
 
   })
 
-  it.skip('can post payload to tecsysteam\'s slack', () => {
+  it('can post payload to tecsysteam\'s slack', () => {
+
+    return sb.postOnSlack('testsbyalexis','christmas_tree','test message!')
+    .then((v) => {
+      var error = v[0]
+      expect(error).to.be.null
+    })
 
   })
 
