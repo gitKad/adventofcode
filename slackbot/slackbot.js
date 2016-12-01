@@ -45,4 +45,32 @@ slackBot.prototype.listUsersScores = function (jsonleaderboard) {
   });
 };
 
+slackBot.prototype.postOnSlack = function (channel, emoji, message) {
+  var channel = 'testsbyalexis'
+  var username = 'tecslickbot'
+  var url = process.env.adventofcode_slackwebhook
+
+  return new Promise((resolve, reject) => {
+
+    request.post({
+      url: url,
+      form: {
+        payload: JSON.stringify({
+          channel:channel,
+          username:username,
+          text:message,
+          icon_emoji:emoji
+        })
+      }
+    }, function(error, response, body) {
+      if(!error && response.statusCode == 200) {
+        resolve([error, response, body]);
+      } else {
+        reject(Error(response.statusCode));
+      }
+    });
+
+  });
+};
+
 module.exports = slackBot
