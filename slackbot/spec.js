@@ -1,4 +1,5 @@
 var expect = require('chai').expect
+var sinon = require('sinon')
 var SlackBot = require('./slackbot.js')
 
 describe('slackbot', function() {
@@ -23,16 +24,21 @@ describe('slackbot', function() {
 
   it('can list users and scores', () => {
 
-    return sb.retrieveLeaderboard(110888)
-    .then((v) => {
-      return sb.listUsersScores(v[2])
-    })
+    // hardcoded, valid results from a a call to retrieveLeaderboard()
+    var v = [null, 200, JSON.stringify({"members":{
+      "13934":{"name":"Joel Bourbonnais","id":"13934","stars":0,"completion_day_level":{},"last_star_ts":"1969-12-31T19:00:00-0500"},
+      "110888":{"last_star_ts":"1969-12-31T19:00:00-0500","completion_day_level":{},"stars":1,"id":"110888","name":"Alexis Philippe"}
+    }, "event":"2016","owner_id":"110888"}) ]
+
+    return sb.listUsersScores(v[2])
     .then((v) => {
       var error = v[0], list = v[1]
       expect(error).to.be.null
       expect(list).to.be.a('array')
-      expect(list).to.contain('Alexis Philippe')
-      expect(response.length).to.be.above(0)
+      expect(list).to.have.a.lengthOf(2)
+      expect(list).to.contain({name: 'Alexis Philippe', score: 1})
+      expect(list).to.contain({name: 'Joel Bourbonnais', score: 0})
+
     })
 
   })

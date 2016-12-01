@@ -40,6 +40,8 @@ slackBot.prototype.listUsersScores = function (jsonleaderboard) {
       }
     }
 
+    console.log(leaderboard);
+
     resolve([null,leaderboard])
 
   });
