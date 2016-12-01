@@ -64,9 +64,9 @@ slackBot.prototype.postOnSlack = function (channel, emoji, message) {
       }
     }, function(error, response, body) {
       if(!error && response.statusCode == 200) {
-        resolve([error, response, body]);
+        resolve([error, response, body])
       } else {
-        reject(Error(response.statusCode));
+        reject(Error(response.statusCode))
       }
     });
 

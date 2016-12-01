@@ -47,13 +47,14 @@ describe('slackbot', function() {
 
     return sb.postOnSlack('testsbyalexis','christmas_tree','test message!')
     .then((v) => {
-      var error = v[0]
+      var error = v[0], response = v[1]
       expect(error).to.be.null
+      expect(response.statusCode).to.be.eql(200)
     })
 
   })
 
-  it.skip('can recognize a new leaderboard subscription', () => {
+  it('can recognize a new leaderboard subscription', () => {
 
   })
 
