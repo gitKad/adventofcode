@@ -12,8 +12,13 @@ describe('slackbot', function() {
 
   beforeEach(() => {
     sb = new SlackBot()
-    fs.unlink(sb.latestRetrievedLeaderboardPath,(err)=>{})
-    fs.unlink(sb.latestAnnouncedLeaderboardPath,(err)=>{})
+
+    var promisesOfFilesDeletion = []
+
+    promisesOfFilesDeletion.push(fs.unlink(sb.latestRetrievedLeaderboardPath,() => {Promise.resolve()}))
+    promisesOfFilesDeletion.push(fs.unlink(sb.latestAnnouncedLeaderboardPath,() => {Promise.resolve()}))
+
+    return Promise.all(promisesOfFilesDeletion)
   })
 
   it('can retrieve private leaderbord from adventofcode', () => {
@@ -139,8 +144,46 @@ describe('slackbot', function() {
 
   })
 
-  it.skip('can recognize a leaderboard score change', () => {
+  it('can recognize a leaderboard score change', () => {
+    var firstStubbedReturn = new Promise(function(resolve, reject) {
+      resolve([null, {statusCode:200}, JSON.stringify({"members":{
+            "110888":{"last_star_ts":"1969-12-31T19:00:00-0500","completion_day_level":{},"stars":1,"id":"110888","name":"Alexis Philippe"}
+          }, "event":"2016","owner_id":"110888"}
+        )]
+      )})
+    var secondStubbedReturn = new Promise(function(resolve, reject) {
+      resolve([null, {statusCode:200}, JSON.stringify({"members":{
+            "110888":{"last_star_ts":"1969-12-31T19:00:00-0500","completion_day_level":{},"stars":2,"id":"110888","name":"Alexis Philippe"}
+          }, "event":"2016","owner_id":"110888"}
+        )]
+      )})
+    var privateBoardOwnerId = 110888
+    var getPayloadFromAdventOfCodeStub = sinon.stub(sb,'getPayloadFromAdventOfCode')
+    getPayloadFromAdventOfCodeStub.onFirstCall().returns(firstStubbedReturn)
+    getPayloadFromAdventOfCodeStub.onSecondCall().returns(secondStubbedReturn)
 
+    return sb.persistLeaderboards(privateBoardOwnerId)
+    .then(() => {
+      return sb.listNewStars()
+    })
+    .then((v) => {
+      var error = v[0], list = v[1]
+      expect(error).to.be.null
+      expect(list).to.be.a('array')
+      expect(list).to.have.a.lengthOf(0)
+      return sb.persistLeaderboards(privateBoardOwnerId)
+    })
+    .then(() => {
+      return sb.listNewStars()
+    })
+    .then((v) => {
+      var error = v[0], list = v[1]
+      expect(getPayloadFromAdventOfCodeStub).calledTwice
+      expect(error).to.be.null
+      expect(list).to.be.a('array')
+      expect(list).to.have.a.lengthOf(1)
+      expect(list).to.include({name:'Alexis Philippe', stars:3})
+    })
   })
 
 })

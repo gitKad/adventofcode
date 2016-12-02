@@ -164,12 +164,66 @@ slackBot.prototype.listNewSubscriptions = function () {
   })
 }
 
+slackBot.prototype.listNewStars = function () {
+  var sb = this
+
+  return new Promise((resolve, reject) => {
+
+    var readUserListsPromises = []
+    var latestRetrievedUsersList, latestAnnouncedUsersList
+
+    var latestRetrievedLeaderboardPromise = new Promise((fileResolve, fileReject) => {
+      fs.readFile(sb.latestRetrievedLeaderboardPath, (err, data) => {
+        if (err) fileReject(Error('k1005'+err))
+        fileResolve(data)
+      })
+    })
+    .then((latestRetrievedLeaderboardFile) => {
+      return sb.listUsersScores(latestRetrievedLeaderboardFile)
+    })
+    .then((v) => {
+      latestRetrievedUsersList = v[1]
+      Promise.resolve()
+    })
+
+    var latestAnnouncedLeaderboard = new Promise((fileResolve, fileReject) => {
+      fs.readFile(sb.latestAnnouncedLeaderboardPath, (err, data) => {
+        if (err) fileReject(Error('k1006'+err))
+        fileResolve(data)
+      })
+    })
+    .then((latestAnnouncedLeaderboardFile) => {
+      return sb.listUsersScores(latestAnnouncedLeaderboardFile)
+    })
+    .then((v) => {
+      latestAnnouncedUsersList = v[1]
+      Promise.resolve()
+    })
+
+    readUserListsPromises.push(latestRetrievedLeaderboardPromise)
+    readUserListsPromises.push(latestAnnouncedLeaderboard)
+    Promise.all(readUserListsPromises)
+    .then(() => {
+      var newStars = latestRetrievedUsersList.filter(function(obj) {
+        return !latestAnnouncedUsersList.some(function(obj2) {
+            return obj.name == obj2.name && obj.score == obj2.score;
+          });
+      });
+
+      resolve([null,newStars])
+    })
+    .catch(reason => {
+      reject(Error('k1004: '+reason))
+    })
+  })
+}
+
 slackBot.prototype.announceSubscriptions = function (subscriptions) {
   var sb = this
   var postsPromises = []
 
   for (var i = 0; i < subscriptions.length; i++) {
-    postsPromises.push(sb.postOnSlack('testsbyalexis',':floppy_disk:','I ANNOUNCE A SUBSCRIPTION OF '+subscriptions[i]))
+    postsPromises.push(sb.postOnSlack('testsbyalexis',':floppy_disk:','I ANNOUNCE THE SUBSCRIPTION OF '+subscriptions[i]))
   }
 
   return Promise.all(postsPromises)

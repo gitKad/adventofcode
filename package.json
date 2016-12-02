@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Exercising my rusty development skills with adventofcode.com 2015 using nodejs and TDD if I can find the time to spare",
   "devDependencies": {
-    "request-promise":"latest",
-    "chai":"latest",
-    "mocha":"latest"
+    "request-promise": "latest",
+    "chai": "latest",
+    "mocha": "latest"
   },
   "main": "index.js",
   "scripts": {
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/gitKad/adventofcode/issues"
   },
-  "homepage": "https://github.com/gitKad/adventofcode#readme"
+  "homepage": "https://github.com/gitKad/adventofcode#readme",
+  "dependencies": {
+    "bluebird": "^3.4.6"
+  }
 }
