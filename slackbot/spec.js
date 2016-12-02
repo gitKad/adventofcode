@@ -94,13 +94,19 @@ describe('slackbot', function() {
         )]
       )})
     var privateBoardOwnerId = 110888
-    // var retrieveLeaderboardSpy = sinon.spy(sb,'retrieveLeaderboard')
     var getPayloadFromAdventOfCodeStub = sinon.stub(sb,'getPayloadFromAdventOfCode')
     getPayloadFromAdventOfCodeStub.onFirstCall().returns(firstStubbedReturn)
     getPayloadFromAdventOfCodeStub.onSecondCall().returns(secondStubbedReturn)
 
     return sb.persistLeaderboards(privateBoardOwnerId)
     .then(() => {
+      return sb.listNewSubscriptions()
+    })
+    .then((v) => {
+      var error = v[0], list = v[1]
+      expect(error).to.be.null
+      expect(list).to.be.a('array')
+      expect(list).to.have.a.lengthOf(0)
       return sb.persistLeaderboards(privateBoardOwnerId)
     })
     .then(() => {
@@ -112,43 +118,23 @@ describe('slackbot', function() {
       expect(error).to.be.null
       expect(list).to.be.a('array')
       expect(list).to.have.a.lengthOf(1)
-      expect(list).to.contain({name: 'Joel Bourbonnais', score: 0})
+      expect(list).to.include('Joel Bourbonnais')
     })
   })
 
-  it.skip('can announce a new leaderboard subscription', () => {
+  it('can announce a new leaderboard subscription', () => {
 
-    var firstStubbedReturn = new Promise(function(resolve, reject) {
-      resolve([null, {statusCode:200}, JSON.stringify({"members":{
-            "110888":{"last_star_ts":"1969-12-31T19:00:00-0500","completion_day_level":{},"stars":1,"id":"110888","name":"Alexis Philippe"}
-          }, "event":"2016","owner_id":"110888"}
-        )]
-      )})
-    var secondStubbedReturn = new Promise(function(resolve, reject) {
-      resolve([null, {statusCode:200}, JSON.stringify({"members":{
-            "13934":{"name":"Joel Bourbonnais","id":"13934","stars":0,"completion_day_level":{},"last_star_ts":"1969-12-31T19:00:00-0500"},
-            "110888":{"last_star_ts":"1969-12-31T19:00:00-0500","completion_day_level":{},"stars":1,"id":"110888","name":"Alexis Philippe"}
-          }, "event":"2016","owner_id":"110888"}
-        )]
-      )})
-    var privateBoardOwnerId = 110888
     var postOnSlackStub = sinon.stub(sb,'postOnSlack')
-    var listNewSubscriptionsSpy = sinon.spy(sb,'listNewSubscriptions')
-    var retrieveLeaderboardStub = sinon.stub(sb,'retrieveLeaderboard')
-    retrieveLeaderboardStub.onFirstCall().returns(firstStubbedReturn)
-    retrieveLeaderboardStub.onSecondCall().returns(secondStubbedReturn)
+    var listNewSubscriptionsStub = sinon.stub(sb,'listNewSubscriptions')
 
-    return sb.retrieveLeaderboard(privateBoardOwnerId)
-    .then(() => {
-      return sb.retrieveLeaderboard(privateBoardOwnerId)
+    listNewSubscriptionsStub.returns(Promise.resolve(['Kad','Kotix']))
+
+    return sb.listNewSubscriptions()
+    .then((subscriptions) => {
+      return sb.announceSubscriptions(subscriptions)
     })
     .then(() => {
-      return sb.announceSubscriptions()
-      return sb.announceSubscriptions()
-    })
-    .then(() => {
-      expect(listNewSubscriptionsSpy).calledOnce
-      expect(postOnSlackStub).calledOnce
+      expect(postOnSlackStub).calledTwice
     })
 
   })

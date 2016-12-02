@@ -153,6 +153,9 @@ slackBot.prototype.listNewSubscriptions = function () {
             return obj.name == obj2.name;
           });
       });
+
+      newSubscriptions.map((val,idx,arr)=>{ arr[idx] = val.name })
+
       resolve([null,newSubscriptions])
     })
     .catch(reason => {
@@ -161,13 +164,15 @@ slackBot.prototype.listNewSubscriptions = function () {
   })
 }
 
-slackBot.prototype.announceSubscriptions = function () {
+slackBot.prototype.announceSubscriptions = function (subscriptions) {
   var sb = this
+  var postsPromises = []
 
-  return new Promise(function(resolve, reject) {
-    sb.postOnSlack('testsbyalexis',':floppy_disk:','I ANNOUNCE A SUBSCRIPTION')
-    resolve()
-  });
+  for (var i = 0; i < subscriptions.length; i++) {
+    postsPromises.push(sb.postOnSlack('testsbyalexis',':floppy_disk:','I ANNOUNCE A SUBSCRIPTION OF '+subscriptions[i]))
+  }
+
+  return Promise.all(postsPromises)
 }
 
 module.exports = slackBot
