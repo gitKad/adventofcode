@@ -4,55 +4,92 @@ var chaiAsPromised = require("chai-as-promised")
 
 chai.use(chaiAsPromised);
 
-var I = require('./me.js')
-var AdventOfCodeChatter = require('./inputLurker.js')
+var Me = require('./me.js')
+var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
 describe('I', () => {
 
   beforeEach(() => {
-    i = new I()
+    me = new Me()
   })
 
-  it('can simplify a path to a single distance', () => {
-    var example1Inputs = 'R2, L3'
-    var example2Inputs = 'R2, R2, R2'
-    var example3Inputs = 'R5, L5, R5, R3'
-    var example1Answer = 5
-    var example2Answer = 2
-    var example3Answer = 12
+  it('can tell how far I am from the drop location', () => {
+    expect(me.howFarIs({x:2, y:3})).to.eventually.be.a('number').equal(5)
+    expect(me.howFarIs({x:0, y:-2})).to.eventually.be.a('number').equal(2)
+    expect(me.howFarIs({x:10, y:2})).to.eventually.be.a('number').equal(12)
+  })
 
-    expect(i.simplifyAPathToADistance(example1Inputs)).to.eventually.be.a('number').equal(example1Answer)
-    expect(i.simplifyAPathToADistance(example2Inputs)).to.eventually.be.a('number').equal(example2Answer)
-    expect(i.simplifyAPathToADistance(example3Inputs)).to.eventually.be.a('number').equal(example3Answer)
+  it('can walk a path', () => {
+    expect(me.walkAPath('R2, L3')).to.eventually.be.eql({x:2, y:3})
+    expect(me.walkAPath('R2, R2, R2')).to.eventually.be.eql({x:0, y:-2})
+    expect(me.walkAPath('R5, L5, R5, R3')).to.eventually.be.eql({x:10, y:2})
   })
 
   it('can keep track of which direction I\'m going', () => {
-    expect(i.wonderWhichDirectionIAmNowFacing('N','R')).to.eventually.be.a('string').equal('E')
-    expect(i.wonderWhichDirectionIAmNowFacing('E','R')).to.eventually.be.a('string').equal('S')
-    expect(i.wonderWhichDirectionIAmNowFacing('N','L')).to.eventually.be.a('string').equal('W')
-    expect(i.wonderWhichDirectionIAmNowFacing('W','R')).to.eventually.be.a('string').equal('N')
-    expect(i.wonderWhichDirectionIAmNowFacing('W','L')).to.eventually.be.a('string').equal('S')
+    expect(me.wonderWhichDirectionIAmNowFacing('N','R')).to.eventually.be.a('string').equal('E')
+    expect(me.wonderWhichDirectionIAmNowFacing('N','L')).to.eventually.be.a('string').equal('W')
+    expect(me.wonderWhichDirectionIAmNowFacing('W','R')).to.eventually.be.a('string').equal('N')
+    expect(me.wonderWhichDirectionIAmNowFacing('W','L')).to.eventually.be.a('string').equal('S')
   })
 
-  it('works when going far', function() {
-      return expect(i.simplifyAPathToADistance('L1337')).to.eventually.be.a('number').equal(1337)
-  });
+  it('can go far without getting list', () => {
+    return me.walkAPath('L1337')
+    .then((position) => {
+      expect(position).to.be.eql({x:-1337,y:0})
+      return me.howFarIs(position)
+    })
+    .then((distance) => {
+      expect(distance).to.be.a('number').eql(1337)
+    })
+  })
 
-  it.skip('can remember I\'ve been here', () => {
-    return i.walkUntilIRememberBeingHere(path)
-    .then((result) => {
-      expect(result).to.be.ok
-      expect(result).to.be.a('number')
-      expect(result).to.be.eql(example2Answer)
-      return i.simplifyAPathToADistance(example3Inputs)
+  it('can remember I\'ve been here', () => {
+    var examplePath = 'R8, R4, R4, R8'
+    var exampleSolution = 4
+
+    return me.walkAPath(examplePath)
+    .then(() => {
+      return me.rememberBeingHere()
+    })
+    .then((position) => {
+      expect(position).to.be.eql({x:4,y:0})
+      return me.howFarIs(position)
+    })
+    .then((distance) => {
+      expect(distance).to.be.a('number').eql(exampleSolution)
     })
   })
 
   it('can earn a gold star on day 1', () => {
-    aCC = new AdventOfCodeChatter()
-    aCC.getInput(1, function(input) {
-      return expect(i.simplifyAPathToADistance(input)).to.eventually.be.a('number').equal(243)
+    var aCC = new AdventOfCodeChatter()
+    return aCC.getInput(1)
+    .then((input) => {
+      return me.walkAPath(input)
     })
-
+    .then((position) => {
+      return me.howFarIs(position)
+    })
+    .then((distance) => {
+      expect(distance).to.be.a('number').equal(243)
+    })
   })
+
+  it('can earn a silver star on day 1', () => {
+    var aCC = new AdventOfCodeChatter()
+    return aCC.getInput(1)
+    .then((input) => {
+      return me.walkAPath(input)
+    })
+    .then(() => {
+      return me.rememberBeingHere()
+    })
+    .then((position) => {
+      return me.howFarIs(position)
+    })
+    .then((distance) => {
+      expect(distance).to.be.a('number').equal(142)
+      return Promise.resolve()
+    })
+  })
+
 })

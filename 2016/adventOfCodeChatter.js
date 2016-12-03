@@ -4,7 +4,7 @@ var adventOfCodeChatter = function() {
 
 }
 
-adventOfCodeChatter.prototype.getInput = function (day, callback) {
+adventOfCodeChatter.prototype.getInput = function (day) {
   var sessionID = process.env.adventofcode_sessionId;
 
   var options = {
@@ -14,8 +14,8 @@ adventOfCodeChatter.prototype.getInput = function (day, callback) {
     }
   }
 
-  request(options).then( function(body){
-    callback(body);
+  return request(options).then( (body) => {
+    return Promise.resolve(body)
   })
 }
 

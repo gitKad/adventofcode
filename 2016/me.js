@@ -3,10 +3,10 @@
 var Promise = require('bluebird')
 
 var Me = function() {
-  this.placesIHaveBeen = [{x: 0, y: 0}]
+  this.placesIHaveBeen = []
 }
 
-Me.prototype.simplifyAPathToADistance = function (easterBunnyRecruitingDocument) {
+Me.prototype.walkAPath = function (easterBunnyRecruitingDocument) {
   var i = this
   var direction = 'N'
   easterBunnyRecruitingDocument = easterBunnyRecruitingDocument.split(/\s*,\s*/)
@@ -19,23 +19,22 @@ Me.prototype.simplifyAPathToADistance = function (easterBunnyRecruitingDocument)
     .then((newDirection) => {
       direction = newDirection
 
-      switch (direction) {
-        case 'W': return {x: acc.x-distance, y:acc.y}
-        case 'E': return {x: acc.x+distance, y:acc.y}
-        case 'N': return {x: acc.x, y:acc.y+distance}
-        case 'S': return {x: acc.x, y:acc.y-distance}
+      for (var j = 0; j < distance; j++) {
+        switch (direction) {
+          case 'W': acc.x--; break;
+          case 'E': acc.x++; break;
+          case 'N': acc.y++; break;
+          case 'S': acc.y--; break;
+        }
+        i.placesIHaveBeen.push({x: acc.x, y:acc.y})
       }
-      i.placesIHaveBeen.push({x: acc.x, y:acc.y})
+      return {x: acc.x, y:acc.y}
     })
 
   }, {x:0, y:0})
-  .then((finalPosition) => {
-    return i.howFarAmI(finalPosition)
-  })
-
 }
 
-Me.prototype.howFarAmI = function(position) {
+Me.prototype.howFarIs = function(position) {
   return Promise.resolve(Math.abs(position.x)+Math.abs(position.y))
 }
 
@@ -60,7 +59,20 @@ Me.prototype.wonderWhichDirectionIAmNowFacing = function (direction, turn) {
       case 'R': resolve(directions[++directionVal]); break;
       default: reject('not a valid turn {\'L\',\'R\'}')
     }
-  });
-};
+  })
+}
+
+Me.prototype.rememberBeingHere = function () {
+  for (var i = 0; i < this.placesIHaveBeen.length; i++) {
+    for (var j = 0; j < this.placesIHaveBeen.length; j++) {
+      if( j != i &&
+        this.placesIHaveBeen[i].x == this.placesIHaveBeen[j].x &&
+        this.placesIHaveBeen[i].y == this.placesIHaveBeen[j].y ) {
+        return Promise.resolve(this.placesIHaveBeen[i])
+      }
+    }
+  }
+  return Promise.reject('never been to the same place twice')
+}
 
 module.exports = Me
