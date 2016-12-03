@@ -7,7 +7,7 @@ chai.use(chaiAsPromised);
 var Me = require('./me.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe('I', () => {
+describe('I, on day 1, ', () => {
 
   beforeEach(() => {
     me = new Me()

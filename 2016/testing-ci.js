@@ -1,5 +1,9 @@
-var expect = require('chai').expect,
-    inputLurker = require('./inputLurker.js');
+var chai = require('chai')
+var expect = chai.expect
+var chaiAsPromised = require("chai-as-promised")
+
+chai.use(chaiAsPromised);
+var AdventOfCodeChatter = require('./adventOfCodeChatter.js');
 
 describe('Environment', function () {
 
@@ -9,9 +13,8 @@ describe('Environment', function () {
   });
 
   it('has helper that can get input from adventofcode',function() {
-    inputLurker.getInput(1, function(input) {
-      expect(input).to.have.length.above(0);
-    });
+    var aCC = new AdventOfCodeChatter()
+    expect(aCC.getInput(1)).to.eventually.be.a('number').of.length.above(0)
   });
 
 });
