@@ -88,7 +88,6 @@ describe('I', () => {
     })
     .then((distance) => {
       expect(distance).to.be.a('number').equal(142)
-      return Promise.resolve()
     })
   })
 
