@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Exercising my rusty development skills with adventofcode.com 2015 using nodejs and TDD if I can find the time to spare",
   "devDependencies": {
-    "request-promise": "latest",
     "chai": "latest",
-    "mocha": "latest"
+    "chai-as-promised": "^6.0.0",
+    "mocha": "latest",
+    "request-promise": "latest"
   },
   "main": "index.js",
   "scripts": {
