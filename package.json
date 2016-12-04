@@ -5,8 +5,7 @@
   "devDependencies": {
     "chai": "latest",
     "chai-as-promised": "^6.0.0",
-    "mocha": "latest",
-    "request-promise": "latest"
+    "mocha": "latest"
   },
   "main": "index.js",
   "scripts": {
