@@ -60,7 +60,7 @@ describe('I, on day 1, ', () => {
     })
   })
 
-  it('can earn a gold star on day 1', () => {
+  it('can earn a first star on day 1', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(1)
     .then((input) => {
@@ -74,7 +74,7 @@ describe('I, on day 1, ', () => {
     })
   })
 
-  it('can earn a silver star on day 1', () => {
+  it('can earn a second star on day 1', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(1)
     .then((input) => {

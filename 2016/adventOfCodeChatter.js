@@ -11,7 +11,8 @@ adventOfCodeChatter.prototype.getInput = function (day) {
     path: '/2016/day/'+day+'/input',
     method: 'GET',
     headers: {
-      'Cookie': 'session='+process.env.adventofcode_sessionId
+      'Cookie': 'session='+process.env.adventofcode_sessionId,
+      'user-agent': 'node.js'
     }
   }
 
