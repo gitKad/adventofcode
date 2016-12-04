@@ -13,15 +13,15 @@ describe('I, on day 2, ', () => {
     me = new Me()
   })
 
-  it.skip('can read keypad instructions', () => {
+  it('can read keypad instructions', () => {
     expect(me.figureOutNextDigit(5,'ULL')).to.eventually.be.a('number').equal(1)
     expect(me.figureOutNextDigit(1,'RRDDD')).to.eventually.be.a('number').equal(9)
     expect(me.figureOutNextDigit(9,'LURDL')).to.eventually.be.a('number').equal(8)
     expect(me.figureOutNextDigit(8,'UUUUD')).to.eventually.be.a('number').equal(5)
   })
 
-  it.skip('can figure out combination from keypad instructions', () => {
-    expect(me.figureOutCombination(5,'ULL\r\nRRDDD\r\nLURDL\r\nUUUUD')).to.eventually.be.a('number').equal(1985)
+  it('can figure out combination from keypad instructions', () => {
+    expect(me.figureOutCombination('ULL\r\nRRDDD\r\nLURDL\r\nUUUUD')).to.eventually.be.a('number').equal(1985)
   })
 
   it.skip('can earn a gold star on day 2', () => {
