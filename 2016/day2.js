@@ -14,44 +14,39 @@ describe('I, on day 2, ', () => {
   })
 
   it('can read keypad instructions', () => {
-    expect(me.figureOutNextDigit(5,'ULL')).to.eventually.be.a('number').equal(1)
-    expect(me.figureOutNextDigit(1,'RRDDD')).to.eventually.be.a('number').equal(9)
-    expect(me.figureOutNextDigit(9,'LURDL')).to.eventually.be.a('number').equal(8)
-    expect(me.figureOutNextDigit(8,'UUUUD')).to.eventually.be.a('number').equal(5)
+    expect(me.figureOutNextDigit('ordinary','5','ULL')).to.eventually.be.a('string').equal('1')
+    expect(me.figureOutNextDigit('ordinary','1','RRDDD')).to.eventually.be.a('string').equal('9')
+    expect(me.figureOutNextDigit('ordinary','9','LURDL')).to.eventually.be.a('string').equal('8')
+    expect(me.figureOutNextDigit('ordinary','8','UUUUD')).to.eventually.be.a('string').equal('5')
   })
 
-  it('can figure out combination from keypad instructions', () => {
-    expect(me.figureOutCombination('ULL\r\nRRDDD\r\nLURDL\r\nUUUUD')).to.eventually.be.a('number').equal(1985)
+  it('can figure out combination from instructions on ordinary keypad', () => {
+    expect(me.figureOutCombination('ordinary','ULL\r\nRRDDD\r\nLURDL\r\nUUUUD')).to.eventually.be.a('string').equal('1985')
   })
 
-  it.skip('can earn a gold star on day 2', () => {
+  it('can figure out combination from keypad instructions on funky keypad', () => {
+    expect(me.figureOutCombination('funky','ULL\r\nRRDDD\r\nLURDL\r\nUUUUD')).to.eventually.be.a('string').equal('5DB3')
+  })
+
+  it('can earn a gold star on day 2', () => {
     var aCC = new AdventOfCodeChatter()
-    return aCC.getInput(1)
+    return aCC.getInput(2)
     .then((input) => {
-      return me.walkAPath(input)
+      return me.figureOutCombination('ordinary',input)
     })
-    .then((position) => {
-      return me.howFarIs(position)
-    })
-    .then((distance) => {
-      expect(distance).to.be.a('number').equal(243)
+    .then((combination) => {
+      expect(combination).to.be.a('string').equal('95549')
     })
   })
 
-  it.skip('can earn a second gold star on day 2', () => {
+  it('can earn a second gold star on day 2', () => {
     var aCC = new AdventOfCodeChatter()
-    return aCC.getInput(1)
+    return aCC.getInput(2)
     .then((input) => {
-      return me.walkAPath(input)
+      return me.figureOutCombination('funky',input)
     })
-    .then(() => {
-      return me.rememberBeingHere()
-    })
-    .then((position) => {
-      return me.howFarIs(position)
-    })
-    .then((distance) => {
-      expect(distance).to.be.a('number').equal(142)
+    .then((combination) => {
+      expect(combination).to.be.a('string').equal('D87AD')
     })
   })
 
