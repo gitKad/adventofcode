@@ -6,6 +6,70 @@ var Me = function() {
   this.placesIHaveBeen = []
 }
 
+Me.prototype.rearengeTriangles = function(input) {
+  input = input.trim().split(/[\r\n]+/)
+  input.map((row,idx) => {
+    input[idx] = row.trim().split(/\s+/).map((val) => {
+      return parseInt(val)
+    })
+  })
+
+  var transpositionPromises = []
+  for (let i = 0; i < input.length; i+=3) {
+    var arrayToTranspose = []
+    arrayToTranspose.push(input[i])
+    arrayToTranspose.push(input[i+1])
+    arrayToTranspose.push(input[i+2])
+    var p = this.transposeMatrix(arrayToTranspose)
+    .then((transposedMatrix) => {
+      input.splice(i,3,transposedMatrix[0],transposedMatrix[1],transposedMatrix[2])
+      return Promise.resolve()
+    })
+    transpositionPromises.push(p)
+  }
+
+  return Promise.all(transpositionPromises)
+  .then(() => {
+    return Promise.map(input, (item, idx) => {
+      input[idx] = item.join(' ')
+    })
+  })
+  .then(() => {
+    input = input.join('\r\n')
+    return Promise.resolve(input)
+  })
+}
+
+Me.prototype.transposeMatrix = function (matrixToTranspose) {
+  return Promise.map(matrixToTranspose[0], (col, i) => {
+    return Promise.map(matrixToTranspose, (row) => {
+      return row[i]
+    })
+  })
+}
+
+Me.prototype.countTriangles = function (measurementsSet) {
+  measurementsSet = measurementsSet.trim().split(/[\r\n]+/)
+
+  return Promise.map(measurementsSet, (measurement,i,l) => {
+    measurement = measurement.trim().split(/\s+/).map((val) => { return parseInt(val) })
+    return this.isATriangle(measurement)
+  })
+  .then((arrayOfResults) => {
+    var sum = arrayOfResults.reduce(function(a, b) {
+      return a + b;
+    }, 0);
+    return Promise.resolve(sum)
+  })
+}
+
+Me.prototype.isATriangle = function (measurements) {
+  if(measurements[0]+measurements[1] <= measurements[2] || measurements[0]+measurements[2] <= measurements[1] || measurements[1]+measurements[2] <= measurements[0]) {
+    return Promise.resolve(false)
+  }
+  return Promise.resolve(true)
+}
+
 Me.prototype.figureOutCombination = function (keypad, instructions) {
   var combination = []
   var position = '5'
