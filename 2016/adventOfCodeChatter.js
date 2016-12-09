@@ -20,7 +20,7 @@ adventOfCodeChatter.prototype.getInput = function (day) {
       if (!error && response.statusCode == 200) {
         resolve(body)
       } else {
-        reject(error)
+        reject(response.statusCode)
       }
     })
   })
