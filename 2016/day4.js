@@ -9,7 +9,7 @@ var Room = require('./room.js')
 var Kiosk = require('./kiosk.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe('I, on day 4, ', () => {
+describe.only('I, on day 4, ', () => {
 
   beforeEach(() => {
     room1 = new Room().encryptedName('aaaaa-bbb-z-y-x-123[abxyz]')
@@ -49,10 +49,9 @@ describe('I, on day 4, ', () => {
     expect(kiosk.getRealRooms().list).to.be.a('array').with.lengthOf(3)
   })
 
-  it('can sum valid sector ids',(done) => {
+  it('can sum valid sector ids',() => {
     kiosk.attach(room1).attach(room2).attach(room3).attach(room4)
     expect(kiosk.getRealRooms().sectorSum).to.be.a('number').eql(1514)
-    done()
   })
 
   it('can import rooms from data file',() => {
@@ -61,6 +60,11 @@ describe('I, on day 4, ', () => {
     .then(() => {
       return expect(kiosk.getRealRooms().list).to.be.a('array').with.lengthOf(4)
     })
+  })
+
+  it('can decypher a room\'s encrypted name', () => {
+    var room6 = new Room().encryptedName('qzmt-zixmtkozy-ivhz-343[?????]')
+    expect(room6.decypheredName()).to.be.a('string').eql('very encrypted name')
   })
 
   it('can earn a silver star on day 4', () => {
@@ -74,11 +78,18 @@ describe('I, on day 4, ', () => {
     })
   })
 
-  it.skip('can earn a gold star on day 4', () => {
+  it('can earn a gold star on day 4', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(4)
     .then((input) => {
-      expect(input).to.be.a('number').equal(1921)
+      return kiosk.importRooms(input)
+    })
+    .then(() => {
+      kiosk.getRealRooms().list.map((val) => {
+        if(val.decypheredName() == 'northpole object storage') {
+          expect(val.sectorId()).to.be.a('number').eql(324)
+        }
+      })
     })
   })
 
