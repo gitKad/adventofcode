@@ -166,7 +166,14 @@ Me.prototype.walkAPath = function (easterBunnyRecruitingDocument) {
 }
 
 Me.prototype.howFarIs = function(position) {
-  return Promise.resolve(Math.abs(position.x)+Math.abs(position.y))
+  var distance = 0
+
+  try {
+    distance = Math.abs(position.x)+Math.abs(position.y)
+    return Promise.resolve(distance)
+  } catch(err) {
+    return Promise.reject(new Error(err))
+  }
 }
 
 Me.prototype.wonderWhichDirectionIAmNowFacing = function (direction, turn) {

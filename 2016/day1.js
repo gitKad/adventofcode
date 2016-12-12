@@ -53,10 +53,10 @@ describe('I, on day 1, ', () => {
     })
     .then((position) => {
       expect(position).to.be.eql({x:4,y:0})
-      return me.howFarIs(position)
+      expect(me.howFarIs(position)).to.eventually.be.a('number').eql(exampleSolution)
     })
-    .then((distance) => {
-      expect(distance).to.be.a('number').eql(exampleSolution)
+    .catch((err) => {
+      expect(err).to.be.undefined
     })
   })
 
@@ -67,10 +67,10 @@ describe('I, on day 1, ', () => {
       return me.walkAPath(input)
     })
     .then((position) => {
-      return me.howFarIs(position)
+      expect(me.howFarIs(position)).to.eventually.be.a('number').equal(243)
     })
-    .then((distance) => {
-      expect(distance).to.be.a('number').equal(243)
+    .catch((err) => {
+      expect(err).to.be.undefined
     })
   })
 
@@ -84,10 +84,10 @@ describe('I, on day 1, ', () => {
       return me.rememberBeingHere()
     })
     .then((position) => {
-      return me.howFarIs(position)
+      expect(me.howFarIs(position)).to.eventually.be.a('number').equal(142)
     })
-    .then((distance) => {
-      expect(distance).to.be.a('number').equal(142)
+    .catch((err) => {
+      expect(err).to.be.undefined
     })
   })
 
