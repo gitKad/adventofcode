@@ -9,7 +9,7 @@ var Room = require('./room.js')
 var Kiosk = require('./kiosk.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe.only('I, on day 4, ', () => {
+describe('I, on day 4, ', () => {
 
   beforeEach(() => {
     room1 = new Room().encryptedName('aaaaa-bbb-z-y-x-123[abxyz]')
