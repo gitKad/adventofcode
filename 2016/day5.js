@@ -44,10 +44,12 @@ describe('I, on day 5, ', () => {
 
   it('can get the simple password for a door from its id.', function() {
     expect(door.setId('abc').getSimplePassword()).to.be.a('string').eql('18f47a30')
+    expect(getNextInterestingHashStub.callCount).to.be.eql(8)
   })
 
   it('can get the inspired password for a door from its id.', function() {
     expect(door.setId('abc').getInspiredPassword()).to.be.a('string').eql('05ace8e3')
+    expect(getNextInterestingHashStub.callCount).to.be.greaterThan(8)
   })
 
   it.skip('can slowly earn a silver star on day 5', function() {
