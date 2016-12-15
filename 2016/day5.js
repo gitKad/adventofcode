@@ -33,7 +33,7 @@ describe('I, on day 5, ', () => {
   })
 
   it('can get the next interesting hash', function() {
-    getNextInterestingHashStub.restore()
+    getNextInterestingHashStub.restore() // I actually want to test what this stub is stubbing :-)
     expect(door.setId('abc').getNextInterestingHash(3231920)[0]).to.be.a('string').match(/[0]{5}[1][0-f]{10}/)
     expect(door.setId('abc').getNextInterestingHash(3231920)[1]).to.be.a('number').eql(3231929)
     expect(door.setId('abc').getNextInterestingHash(5017300)[0]).to.be.a('string').match(/[0]{5}[8][0-f]{10}/)
