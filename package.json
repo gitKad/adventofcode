@@ -5,7 +5,8 @@
   "devDependencies": {
     "chai": "latest",
     "chai-as-promised": "^6.0.0",
-    "mocha": "latest"
+    "mocha": "latest",
+    "sinon": "^1.17.6"
   },
   "main": "index.js",
   "scripts": {
