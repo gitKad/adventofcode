@@ -16,7 +16,7 @@ Door.prototype.getSimplePassword = function () {
   var i = 0
 
   do {
-    var result = this.getNextCoolHash(i)
+    var result = this.getNextInterestingHash(++i)
     i = result[1]
     let hash = result[0]
     password += hash.substring(5,6)
@@ -31,7 +31,8 @@ Door.prototype.getInspiredPassword = function () {
   var i = 0
 
   do {
-    var result = this.getNextCoolHash(i)
+    var result = this.getNextInterestingHash(++i)
+    console.log(result);
     i = result[1]
     let hash = result[0]
     let charPosition = parseInt(hash.substring(5,6))
@@ -45,7 +46,7 @@ Door.prototype.getInspiredPassword = function () {
   return password
 }
 
-Door.prototype.getNextCoolHash = function (startingIndex) {
+Door.prototype.getNextInterestingHash = function (startingIndex) {
   var hash = ''
   var i = startingIndex
 
@@ -55,7 +56,7 @@ Door.prototype.getNextCoolHash = function (startingIndex) {
   }
   while (hash.substring(0,5) != '00000')
 
-  return [hash, i]
+  return [hash, --i]
 }
 
 
