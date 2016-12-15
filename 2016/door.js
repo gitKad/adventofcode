@@ -32,7 +32,6 @@ Door.prototype.getInspiredPassword = function () {
 
   do {
     var result = this.getNextInterestingHash(++i)
-    console.log(result);
     i = result[1]
     let hash = result[0]
     let charPosition = parseInt(hash.substring(5,6))
