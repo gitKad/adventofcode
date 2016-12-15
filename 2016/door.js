@@ -39,7 +39,6 @@ Door.prototype.getInspiredPassword = function () {
     if (charPosition >= 0 && charPosition <= 7 && password.charAt(charPosition) == '_') {
       password = password.substring(0,charPosition)+hash.substring(6,7)+password.substring(charPosition+1);
     }
-    console.log(hash,password)
   }
   while (password.indexOf('_') >= 0)
 
