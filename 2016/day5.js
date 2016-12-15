@@ -7,7 +7,7 @@ chai.use(chaiAsPromised);
 var Door = require('./door.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe.only('I, on day 5, ', () => {
+describe('I, on day 5, ', () => {
 
   beforeEach(() => {
     door = new Door()
