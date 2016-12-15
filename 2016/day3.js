@@ -33,7 +33,7 @@ describe('I, on day 3, ', () => {
     expect(me.rearengeTriangles(testInput)).to.eventually.be.a('string').eql(testExpectation)
   })
 
-  it('can earn a gold star on day 3', () => {
+  it('can earn a silver star on day 3', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(3)
     .then((input) => {
@@ -44,7 +44,7 @@ describe('I, on day 3, ', () => {
     })
   })
 
-  it('can earn a second gold star on day 3', () => {
+  it('can earn a gold star on day 3', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(3)
     .then((input) => {

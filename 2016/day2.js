@@ -28,7 +28,7 @@ describe('I, on day 2, ', () => {
     expect(me.figureOutCombination('funky','ULL\r\nRRDDD\r\nLURDL\r\nUUUUD')).to.eventually.be.a('string').equal('5DB3')
   })
 
-  it('can earn a gold star on day 2', () => {
+  it('can earn a silver star on day 2', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(2)
     .then((input) => {
@@ -39,7 +39,7 @@ describe('I, on day 2, ', () => {
     })
   })
 
-  it('can earn a second gold star on day 2', () => {
+  it('can earn a gold star on day 2', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(2)
     .then((input) => {
