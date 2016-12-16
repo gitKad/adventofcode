@@ -6,6 +6,34 @@ var Me = function() {
   this.placesIHaveBeen = []
 }
 
+Me.prototype.errorCorrect = function (message, method) {
+  message = message.split(/\s+/)
+  var transposedMessage = []
+  var me = this
+
+  return Promise.map(message, (e,i) => {
+    message[i] = e.split('')
+    return Promise.resolve()
+  })
+  .then(() => {
+    return me.transposeMatrix(message)
+  })
+  .then((transposedMatrix) => {
+    return Promise.map(transposedMatrix, (e,i) => {
+      transposedMessage[i] = me.sortCharactersByFrequency(e.join(''))
+      switch (method) {
+        case 'most': transposedMessage[i] = transposedMessage[i].slice(0,1); break;
+        case 'least': transposedMessage[i] = transposedMessage[i].slice(-1); break;
+        default: return Promise.reject(new Error('not a valid method'));
+      }
+      return Promise.resolve()
+    })
+  })
+  .then(() => {
+    return Promise.resolve(transposedMessage.join(''))
+  })
+}
+
 Me.prototype.sortCharactersByFrequency = function (string) {
   string = string.split('')
 
