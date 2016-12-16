@@ -6,6 +6,24 @@ var Me = function() {
   this.placesIHaveBeen = []
 }
 
+Me.prototype.sortCharactersByFrequency = function (string) {
+  string = string.split('')
+
+  var letterCountObj = string.reduce((acc,val) => {
+    acc[val] = (acc[val] || 0) + 1
+    return acc
+  }, {})
+  var sortedLetterCountObj = Object.keys(letterCountObj).sort((a,b) => {
+    if (letterCountObj[a] == letterCountObj[b]) {
+      return a.charCodeAt(0) - b.charCodeAt(0)
+    } else {
+      return letterCountObj[b]-letterCountObj[a]
+    }
+  })
+
+  return sortedLetterCountObj.join('')
+}
+
 Me.prototype.rearengeTriangles = function(input) {
   input = input.trim().split(/[\r\n]+/)
   input.map((row,idx) => {

@@ -1,4 +1,5 @@
 'use strict'
+const Me = require('./me.js')
 
 var Room = function () {
 }
@@ -35,24 +36,11 @@ Room.prototype.isDecoy = function () {
 }
 
 Room.prototype.checksum = function () {
+  var me = new Me()
   var encryptedName = this.encodedName
-  encryptedName = encryptedName.substring(0,encryptedName.indexOf('[')).replace(/[0-9-]/g,'').split('')
+  encryptedName = encryptedName.substring(0,encryptedName.indexOf('[')).replace(/[0-9-]/g,'')
 
-  var letterCountObj = encryptedName.reduce((acc,val) => {
-    acc[val] = (acc[val] || 0) + 1
-    return acc
-  }, {})
-  var sortedLetterCountObj = Object.keys(letterCountObj).sort((a,b) => {
-    if (letterCountObj[a] == letterCountObj[b]) {
-      return a.charCodeAt(0) - b.charCodeAt(0)
-    } else {
-      return letterCountObj[b]-letterCountObj[a]
-    }
-  })
-
-  sortedLetterCountObj.splice(5)
-  return sortedLetterCountObj.join('')
-
+  return me.sortCharactersByFrequency(encryptedName).substring(0,5)
 }
 
 module.exports = Room

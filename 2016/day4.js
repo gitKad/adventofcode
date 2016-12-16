@@ -18,6 +18,11 @@ describe('I, on day 4, ', () => {
     room4 = new Room().encryptedName('totally-real-room-200[decoy]')
     room5 = new Room().encryptedName('aczupnetwp-dnlgpyrpc-sfye-dstaatyr-561[patyc]')
     kiosk = new Kiosk()
+    me = new Me()
+  })
+
+  it('can sort characters by frequency from a string', function() {
+    expect(me.sortCharactersByFrequency('notarealroom')).to.be.a('string').eql('oarelmnt')
   })
 
   it('can compute a room checksum',() => {
