@@ -4,26 +4,27 @@ var chaiAsPromised = require("chai-as-promised")
 
 chai.use(chaiAsPromised);
 
+const day = -1
 const Me = require('./me.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe.skip('I, on day 7, ', () => {
+describe.only('I, on day '+day, () => {
 
   beforeEach(() => {
     me = new Me()
   })
 
-  it.skip('can earn a silver star on day 6', () => {
+  it.skip('can earn a silver star on day '+day, () => {
     var aCC = new AdventOfCodeChatter()
-    return aCC.getInput(7)
+    return aCC.getInput(day)
     .then((input) => {
       expect(input).to.be.ok
     })
   })
 
-  it.skip('can earn a gold star on day 6', () => {
+  it.skip('can earn a gold star on day '+day, () => {
     var aCC = new AdventOfCodeChatter()
-    return aCC.getInput(7)
+    return aCC.getInput(day)
     .then((input) => {
       expect(input).to.be.ok
     })
