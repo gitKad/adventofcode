@@ -8,13 +8,13 @@ const day = -1
 const Me = require('./me.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe.only('I, on day '+day, () => {
+describe.skip('I, on day '+day, () => {
 
   beforeEach(() => {
     me = new Me()
   })
 
-  it.skip('can earn a silver star on day '+day, () => {
+  it('can earn a silver star on day '+day, () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(day)
     .then((input) => {
@@ -22,7 +22,7 @@ describe.only('I, on day '+day, () => {
     })
   })
 
-  it.skip('can earn a gold star on day '+day, () => {
+  it('can earn a gold star on day '+day, () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(day)
     .then((input) => {
