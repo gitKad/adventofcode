@@ -8,8 +8,9 @@ const Promise = require('bluebird')
 const Me = require('./me.js')
 const Disk = require('./disk.js')
 const AdventOfCodeChatter = require('./adventOfCodeChatter.js')
+const day = 16
 
-describe('I, on day 16, ', () => {
+describe('I, on day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
@@ -39,18 +40,18 @@ describe('I, on day 16, ', () => {
     expect(disk.setData('10000').fillWithTamperedData().getChecksum()).to.be.a('string').with.a.lengthOf(5).eql('01100')
   })
 
-  it('can earn a silver star on day 6', () => {
+  it('can earn a silver star on day '+day, () => {
     var aCC = new AdventOfCodeChatter()
     var disk = new Disk(272)
-    return aCC.getInput(16)
+    return aCC.getInput(day)
     .then((input) => {
       expect(disk.setData(input).fillWithTamperedData().getChecksum()).to.be.a('string').with.a.lengthOf(17).eql('10100011010101011')
     })
   })
 
-  it.skip('can earn a gold star on day 6', () => {
+  it.skip('can earn a gold star on day '+day, () => {
     var aCC = new AdventOfCodeChatter()
-    return aCC.getInput(16)
+    return aCC.getInput(day)
     .then((input) => {
       expect(input).to.be.ok
     })
