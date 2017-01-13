@@ -14,12 +14,12 @@ describe('I, on day 6, ', () => {
   })
 
   it('can error-correct a message with the "most common" method', function() {
-    let testInput = 'eedadn\r\ndrvtee\r\neandsr\r\nraavrd\r\natevrs\r\ntsrnev\r\nsdttsa\r\nrasrtv\r\nnssdts\r\nntnada\r\nsvetve\r\ntesnvt\r\nvntsnd\r\nvrdear\r\ndvrsen\r\nenarar'
+    var testInput = 'eedadn\r\ndrvtee\r\neandsr\r\nraavrd\r\natevrs\r\ntsrnev\r\nsdttsa\r\nrasrtv\r\nnssdts\r\nntnada\r\nsvetve\r\ntesnvt\r\nvntsnd\r\nvrdear\r\ndvrsen\r\nenarar'
     return expect(me.errorCorrect(testInput,'most')).to.eventually.be.a('string').with.lengthOf(6).eql('easter')
   })
 
   it('can error-correct a message with the "least common" method', function() {
-    let testInput = 'eedadn\r\ndrvtee\r\neandsr\r\nraavrd\r\natevrs\r\ntsrnev\r\nsdttsa\r\nrasrtv\r\nnssdts\r\nntnada\r\nsvetve\r\ntesnvt\r\nvntsnd\r\nvrdear\r\ndvrsen\r\nenarar'
+    var testInput = 'eedadn\r\ndrvtee\r\neandsr\r\nraavrd\r\natevrs\r\ntsrnev\r\nsdttsa\r\nrasrtv\r\nnssdts\r\nntnada\r\nsvetve\r\ntesnvt\r\nvntsnd\r\nvrdear\r\ndvrsen\r\nenarar'
     return expect(me.errorCorrect(testInput,'least')).to.eventually.be.a('string').with.lengthOf(6).eql('advent')
   })
 
