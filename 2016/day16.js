@@ -40,7 +40,7 @@ describe('I, on day 16, ', () => {
   })
 
   it('can earn a silver star on day 6', () => {
-    let aCC = new AdventOfCodeChatter()
+    var aCC = new AdventOfCodeChatter()
     var disk = new Disk(272)
     return aCC.getInput(16)
     .then((input) => {
