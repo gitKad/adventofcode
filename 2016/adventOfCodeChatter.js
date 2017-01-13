@@ -11,21 +11,28 @@ adventOfCodeChatter.prototype.getInput = function (day) {
     path: '/2016/day/'+day+'/input',
     method: 'GET',
     headers: {
-      'Cookie': 'session='+process.env.adventofcode_sessionid,
-      'user-agent': 'node.js'
+      'Cookie': 'session='+process.env.adventofcode_sessionid
     }
   }
 
-  return new Promise((resolve, reject) => {
-    var request = http.get(options, (response) => {
+  return new Promise(function(resolve, reject) {
+    var request = http.request(options, function(response) {
+      var body = ''
+
       if (response.statusCode < 200 || response.statusCode > 299) {
          reject(new Error('Failed to load page, status code: ' + response.statusCode));
       }
-      const body = [];
-      response.on('data', (chunk) => body.push(chunk));
-      response.on('end', () => resolve(body.join('')));
+      response.on('data', function(chunk) {
+        body += chunk
+      })
+      response.on('end', function() {
+        resolve(body)
+      })
     })
-    request.on('error', (err) => reject(err))
+    request.on('error', function(err) {
+      reject(err)
+    })
+    request.end()
   })
 }
 
