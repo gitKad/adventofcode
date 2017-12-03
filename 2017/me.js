@@ -7,16 +7,20 @@ var Me = function() {
 
 // Day 2 stuff
 Me.prototype.calculateChecksum = function(spreadsheet) {
-  return spreadsheet
-    .replace(/\n$/gm,'')
-    .split(/\n/g)
-    .map((current) => {
-      return current
-        .split(/\t/g)
-        .map(e => parseInt(e))
-    })
+  return parseStringIntoSpreadsheet(spreadsheet)
     .map( this.differenceOfMinAndMax )
     .reduce((sum, current) => (sum+current), 0)
+}
+
+function parseStringIntoSpreadsheet(spreadsheet) {
+  return spreadsheet
+  .replace(/\n$/gm,'')
+  .split(/\n/g)
+  .map((current) => {
+    return current
+      .split(/\t/g)
+      .map(e => parseInt(e))
+  })
 }
 
 Me.prototype.differenceOfMinAndMax = function(cur) {
