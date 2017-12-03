@@ -8,7 +8,7 @@ const day = -1
 const Me = require('./me.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe.skip('I, on day '+day, () => {
+describe.skip('I, on day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
