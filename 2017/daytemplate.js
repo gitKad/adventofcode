@@ -4,7 +4,7 @@ var chaiAsPromised = require("chai-as-promised")
 
 chai.use(chaiAsPromised);
 
-const day = -1
+const day = -1 // <-- here
 const Me = require('./me.js')
 // const Thing = require('./thing.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
@@ -16,9 +16,11 @@ describe.skip('On day '+day+', ', () => {
     // thing = new Thing()
   })
 
-  describe('My thing', () => {
-    it('can do a basic thing')
-  })
+  // describe('My thing', () => {
+  //   it('can do a basic thing', () => {
+  //     expect(true).to.be.ok
+  //   })
+  // })
 
   describe('I', () => {
     it('can earn a silver star on day '+day, () => {
