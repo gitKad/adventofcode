@@ -11,6 +11,7 @@ class Me {
   measureStepsToCenter(grid, square) {
     return grid.measureStepsToCenter(square)
   }
+  
   // Day 2 stuff
   calculateMinMaxChecksum(spreadsheet) {
     return this.parseStringIntoSpreadsheet(spreadsheet)
