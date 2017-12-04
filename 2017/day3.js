@@ -25,7 +25,7 @@ describe('I, on day '+day+', ', () => {
     var aCC = new AdventOfCodeChatter()
     return aCC.getInput(day)
     .then((input) => {
-      expect(me.measureStepsToCenter(input)).to.be.eql(1)
+      expect(me.measureStepsToCenter(input)).to.be.eql(475)
     })
   })
 
