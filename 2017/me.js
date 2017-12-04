@@ -5,6 +5,28 @@ var Promise = require('bluebird')
 var Me = function() {
 }
 
+// Day 3 steps
+Me.prototype.measureStepsToCenter = function(square) {
+  let squareSize = Math.ceil(Math.sqrt(square))
+  squareSize += squareSize % 2 == 0 ? 1 : 0
+  let maxDistanceToCenter = (squareSize - 1)
+  let minDistanceToCenter = maxDistanceToCenter / 2
+
+  var distance = maxDistanceToCenter
+  var direction = -1
+  for(let i = squareSize**2; i > square; i--) {
+    if(distance == minDistanceToCenter) {
+      direction = 1
+    }
+    else if(distance == maxDistanceToCenter){
+      direction = -1
+    }
+    distance += direction
+  }
+
+  return distance
+}
+
 // Day 2 stuff
 Me.prototype.calculateMinMaxChecksum = function(spreadsheet) {
   return parseStringIntoSpreadsheet(spreadsheet)
@@ -25,7 +47,7 @@ function parseStringIntoSpreadsheet(spreadsheet) {
   .map((current) => {
     return current
       .split(/\t/g)
-      .map(Number)
+      .map(e => parseInt(e))
   })
 }
 
