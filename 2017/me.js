@@ -6,6 +6,17 @@ class Me {
   constructor() {
 
   }
+  // Day 4 stuff
+  countValidPassphrases(passphrases) {
+    const Passphrase = require('./passphrase.js')
+
+    return passphrases
+      .replace(/\n$/gm,'')
+      .split('\n')
+      .map((t) => new Passphrase(t))
+      .filter((e) => e.isValid())
+      .length
+  }
 
   // Day 3 stuff
   measureStepsToCenter(grid, square) {
