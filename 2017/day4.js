@@ -23,23 +23,29 @@ describe('On day '+day+', ', () => {
       expect(new Passphrase('aa bb cc dd aaa\n').hasDuplicateWords()).to.be.false
     })
 
-    it('can be valid or invalid', () => {
-      expect(new Passphrase('aa bb cc dd ee\n').isValid()).to.be.true
-      expect(new Passphrase('aa bb cc dd aa\n').isValid()).to.be.false
-      expect(new Passphrase('aa bb cc dd aaa\n').isValid()).to.be.true
+    it('can tell if it has anagrams', () => {
+      expect(new Passphrase('abcde xyz ecdab\n').hasAnagrams()).to.be.true
+      expect(new Passphrase('abcde fghij\n').hasAnagrams()).to.be.false
+      expect(new Passphrase('a ab abc abd abf abj\n').hasAnagrams()).to.be.false
+      expect(new Passphrase('iiii oiii ooii oooi oooo\n').hasAnagrams()).to.be.false
+      expect(new Passphrase('oiii ioii iioi iiio\n').hasAnagrams()).to.be.true
     })
   })
 
   describe('I', () => {
-    it('can count valid passphrases', () => {
-      expect(me.countValidPassphrases('aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa\n')).to.be.eql(2)
+    it('can count passphrases without repetition', () => {
+      expect(me.countPassphrasesWithoutRepetition('aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa\n')).to.be.eql(2)
+    })
+
+    it('can count passphrases without anagrams', () => {
+      expect(me.countPassphrasesWithoutAnagrams('abcde xyz ecdab\nabcde fghij\na ab abc abd abf abj\niiii oiii ooii oooi oooo\noiii ioii iioi iiio\n')).to.be.eql(3)
     })
 
     it('can earn a silver star on day '+day, () => {
       var aCC = new AdventOfCodeChatter()
       return aCC.getInput(day)
       .then((input) => {
-        expect(input).to.be.ok
+        expect(me.countPassphrasesWithoutRepetition(input)).to.be.eql(477)
       })
     })
   
@@ -47,7 +53,7 @@ describe('On day '+day+', ', () => {
       var aCC = new AdventOfCodeChatter()
       return aCC.getInput(day)
       .then((input) => {
-        expect(me.countValidPassphrases(input)).to.be.eql(2)
+        expect(me.countPassphrasesWithoutAnagrams(input)).to.be.eql(167)
       })
     })
   })

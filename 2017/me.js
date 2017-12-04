@@ -2,19 +2,30 @@
 
 var Promise = require('bluebird')
 
+const Passphrase = require('./passphrase.js')
+
 class Me {
   constructor() {
 
   }
-  // Day 4 stuff
-  countValidPassphrases(passphrases) {
-    const Passphrase = require('./passphrase.js')
 
+  // Day 4 stuff
+  parseStringToPassphrases(passphrases) {
     return passphrases
-      .replace(/\n$/gm,'')
-      .split('\n')
-      .map((t) => new Passphrase(t))
-      .filter((e) => e.isValid())
+    .replace(/\n$/gm,'')
+    .split('\n')
+    .map((t) => new Passphrase(t))
+  }
+
+  countPassphrasesWithoutRepetition(passphrases) {
+    return this.parseStringToPassphrases(passphrases)
+      .filter((e) => !e.hasDuplicateWords())
+      .length
+  }
+
+  countPassphrasesWithoutAnagrams(passphrases) {
+    return this.parseStringToPassphrases(passphrases)
+      .filter((e) => !e.hasAnagrams())
       .length
   }
 
