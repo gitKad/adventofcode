@@ -6,10 +6,9 @@ var Grid = function() {
 }
 
 Grid.prototype.measureStepsToCenter = function(square) {
-  let squareSize = Math.ceil(Math.sqrt(square))
-  squareSize += squareSize % 2 == 0 ? 1 : 0
-  let maxDistanceToCenter = (squareSize - 1)
-  let minDistanceToCenter = maxDistanceToCenter / 2
+  let squareSize = this.getRingSizeFromSquare(square)
+  let maxDistanceToCenter = this.getRingMaxDistanceFromCenter(squareSize)
+  let minDistanceToCenter = this.getRingMinDistanceFromCenter(squareSize)
 
   var distance = maxDistanceToCenter
   var direction = -1
@@ -24,6 +23,20 @@ Grid.prototype.measureStepsToCenter = function(square) {
   }
 
   return distance
+}
+
+Grid.prototype.getRingMinDistanceFromCenter = function(squareSize) {
+  return (squareSize - 1) / 2
+}
+
+Grid.prototype.getRingMaxDistanceFromCenter = function(squareSize) {
+  return (squareSize - 1)
+}
+
+Grid.prototype.getRingSizeFromSquare = function(square) {
+  let squareSize = Math.ceil(Math.sqrt(square))
+  squareSize += squareSize % 2 == 0 ? 1 : 0
+  return squareSize
 }
 
 module.exports = Grid
