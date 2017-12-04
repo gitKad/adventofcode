@@ -18,10 +18,22 @@ describe('On day '+day+', ', () => {
 
   describe('My grid ', () => {
     it('can tell the size of the ring in which a number is found', () => {
-      expect(grid.getRingSizeFromSquare(1)).to.be.eql(1)
-      expect(grid.getRingSizeFromSquare(12)).to.be.eql(5)
-      expect(grid.getRingSizeFromSquare(23)).to.be.eql(5)
-      expect(grid.getRingSizeFromSquare(1024)).to.be.eql(33)
+      expect(grid.getSquareRingSize(1)).to.be.eql(1)
+      expect(grid.getSquareRingSize(12)).to.be.eql(5)
+      expect(grid.getSquareRingSize(23)).to.be.eql(5)
+      expect(grid.getSquareRingSize(1024)).to.be.eql(33)
+    })
+
+    it('can tell the min distance from center of a ring', () => {
+      expect(grid.getRingMinDistanceFromCenter(1)).to.be.eql(0)
+      expect(grid.getRingMinDistanceFromCenter(5)).to.be.eql(2)
+      expect(grid.getRingMinDistanceFromCenter(33)).to.be.eql(16)
+    })
+
+    it('can tell the max distance from center of a ring', () => {
+      expect(grid.getRingMaxDistanceFromCenter(1)).to.be.eql(0)
+      expect(grid.getRingMaxDistanceFromCenter(5)).to.be.eql(4)
+      expect(grid.getRingMaxDistanceFromCenter(33)).to.be.eql(32)
     })
   })
 
