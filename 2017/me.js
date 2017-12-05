@@ -9,6 +9,21 @@ class Me {
 
   }
 
+  // Day 5 stuff
+  followJumpInstructions(input) {
+    let x = input
+      .replace(/\n$/gm,'')
+      .split('\n')
+    
+    var i = 0
+    while(x[i] + i <= x.length && x[i] + i > 0) {
+      i += x[i]
+      x[i]++
+    }
+    console.log(i)
+    
+  }
+
   // Day 4 stuff
   parseStringToPassphrases(passphrases) {
     return passphrases
