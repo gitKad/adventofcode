@@ -6,21 +6,28 @@ chai.use(chaiAsPromised);
 
 const day = 5
 const Me = require('./me.js')
-// const Thing = require('./thing.js')
+const Instructions = require('./jumpInstructions.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
 describe('On day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
-    // thing = new Thing()
   })
 
-  // describe('My thing', () => {
-  //   it('can do a basic thing', () => {
-  //     expect(true).to.be.ok
-  //   })
-  // })
+  describe('My jump instructions', () => {
+    it('can step forward', () => {
+      expect(new Instructions('0\n3\n0\n1\n-3\n').jump(0)).to.be.eql(0)
+    })
+
+    it('can step backward', () => {
+      expect(new Instructions('0\n3\n0\n1\n-3\n').jump(4)).to.be.eql(1)
+    })
+
+    it('won\'t go out of bounds', () => {
+      expect(new Instructions('2\n4\n0\n1\n-2\n').jump(5)).to.be.NaN
+    })
+  })
 
   describe('I', () => {
     it('can reach the exit of the example in 5 steps', () => {

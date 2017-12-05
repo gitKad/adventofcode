@@ -13,7 +13,6 @@ describe('On day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
-    passphrase = new Passphrase()
   })
 
   describe('My passphrase', () => {

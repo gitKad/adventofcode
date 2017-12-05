@@ -3,6 +3,7 @@
 var Promise = require('bluebird')
 
 const Passphrase = require('./passphrase.js')
+const JumpInstructions = require('./jumpInstructions.js')
 
 class Me {
   constructor() {
@@ -10,37 +11,29 @@ class Me {
   }
 
   // Day 5 stuff
-  followJumpInstructions(input) {
-    var x = input
-      .replace(/\n$/gm,'')
-      .split('\n')
-      .map(Number)
+  followJumpInstructions(jumpInstructions) {
+    var ji = new JumpInstructions(jumpInstructions)
     
-    var i = 0
+    var pos = 0
     var steps = 0
-    while(x[i] <= (x.length - i) && x[i] >= -i) {  
-      let inc = x[i]
-      x[i]++
-      i += inc
+    while(ji.instructions[pos] <= (ji.instructions.length - pos) && ji.instructions[pos] >= -pos) {  
+      pos = ji.jump(pos)
       steps++
     }
     return steps
   }
 
-  followWeirdJumpInstructions(input) {
-    var x = input
-      .replace(/\n$/gm,'')
-      .split('\n')
-      .map(Number)
+  followWeirdJumpInstructions(jumpInstructions) {
+    var ji = new JumpInstructions(jumpInstructions)
     
     var i = 0
     var steps = 0
-    while(x[i] <= (x.length - i) && x[i] >= -i) {  
-      let inc = x[i]
+    while(ji.instructions[i] <= (ji.instructions.length - i) && ji.instructions[i] >= -i) {  
+      let inc = ji.instructions[i]
       if(inc >= 3) {
-        x[i]--
+        ji.instructions[i]--
       } else {
-        x[i]++
+        ji.instructions[i]++
       }    
       i += inc
       steps++
