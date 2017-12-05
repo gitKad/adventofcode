@@ -38,9 +38,9 @@ class Me {
   // Day 4 stuff
   parseStringToPassphrases(passphrases) {
     return passphrases
-    .replace(/\n$/gm,'')
-    .split('\n')
-    .map((t) => new Passphrase(t))
+      .replace(/\n$/gm,'')
+      .split('\n')
+      .map((t) => new Passphrase(t))
   }
 
   countPassphrasesWithoutRepetition(passphrases) {
@@ -62,40 +62,17 @@ class Me {
   
   // Day 2 stuff
   calculateMinMaxChecksum(spreadsheet) {
-    return this.parseStringIntoSpreadsheet(spreadsheet)
-      .map( this.differenceOfMinAndMax )
+    return spreadsheet.data
+      .map( spreadsheet.differenceOfMinAndMax )
       .reduce((sum, current) => (sum+current), 0)
   }
 
   calculateEvenlyDivisibleChecksum(spreadsheet) {
-    return this.parseStringIntoSpreadsheet(spreadsheet)
-      .map( this.divisionOfEvenlyDivisible )
+    return spreadsheet.data
+      .map( spreadsheet.divisionOfEvenlyDivisible )
       .reduce((sum, current) => (sum+current), 0)
   }
 
-  parseStringIntoSpreadsheet(spreadsheet) {
-    return spreadsheet
-    .replace(/\n$/gm,'')
-    .split(/\n/g)
-    .map((current) => {
-      return current
-        .split(/\t/g)
-        .map(e => parseInt(e))
-    })
-  }
-
-  divisionOfEvenlyDivisible(cur) {
-    return cur
-      .filter((element, _, array) => {
-        return array
-          .filter( (c) => c != element && (element%c == 0 || c%element == 0), 0 ).length > 0
-      })
-      .reduce((a, b) => b > a ? b/a : a/b)
-  }
-
-  differenceOfMinAndMax(cur) {
-    return Math.max(...cur) - Math.min(...cur)
-  }
 
   // Day 1 stuff
   solveSimpleCaptcha (captcha) {
