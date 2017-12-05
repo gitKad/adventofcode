@@ -9,7 +9,7 @@ const Me = require('./me.js')
 // const Thing = require('./thing.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe.only('On day '+day+', ', () => {
+describe('On day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
