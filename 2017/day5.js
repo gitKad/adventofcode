@@ -16,12 +16,10 @@ describe('On day '+day+', ', () => {
   })
 
   describe('My jump instructions', () => {
-    it('can step forward', () => {
+    it('can jump base on it\'s instructions', () => {
       expect(new Instructions('0\n3\n0\n1\n-3\n').jump(0)).to.be.eql(0)
-    })
-
-    it('can step backward', () => {
       expect(new Instructions('0\n3\n0\n1\n-3\n').jump(4)).to.be.eql(1)
+      expect(new Instructions('0\n3\n0\n1\n-3\n').jump(5)).to.be.NaN
     })
 
     it('can predict it will go out of bounds', () => {
