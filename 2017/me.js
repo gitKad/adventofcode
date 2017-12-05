@@ -11,17 +11,41 @@ class Me {
 
   // Day 5 stuff
   followJumpInstructions(input) {
-    let x = input
+    var x = input
       .replace(/\n$/gm,'')
       .split('\n')
+      .map(Number)
     
     var i = 0
-    while(x[i] + i <= x.length && x[i] + i > 0) {
-      i += x[i]
+    var steps = 0
+    while(x[i] <= (x.length - i) && x[i] >= -i) {  
+      let inc = x[i]
       x[i]++
+      i += inc
+      steps++
     }
-    console.log(i)
+    return steps
+  }
+
+  followWeirdJumpInstructions(input) {
+    var x = input
+      .replace(/\n$/gm,'')
+      .split('\n')
+      .map(Number)
     
+    var i = 0
+    var steps = 0
+    while(x[i] <= (x.length - i) && x[i] >= -i) {  
+      let inc = x[i]
+      if(inc >= 3) {
+        x[i]--
+      } else {
+        x[i]++
+      }    
+      i += inc
+      steps++
+    }
+    return steps
   }
 
   // Day 4 stuff
