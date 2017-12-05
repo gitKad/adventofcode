@@ -16,7 +16,7 @@ class Me {
     
     var pos = 0
     var steps = 0
-    while(ji.instructions[pos] <= (ji.instructions.length - pos) && ji.instructions[pos] >= -pos) {  
+    while(!ji.willGoOutOfBounds(pos)) {  
       pos = ji.jump(pos)
       steps++
     }

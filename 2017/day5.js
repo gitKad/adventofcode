@@ -24,8 +24,8 @@ describe('On day '+day+', ', () => {
       expect(new Instructions('0\n3\n0\n1\n-3\n').jump(4)).to.be.eql(1)
     })
 
-    it('won\'t go out of bounds', () => {
-      expect(new Instructions('2\n4\n0\n1\n-2\n').jump(5)).to.be.NaN
+    it('can predict it will go out of bounds', () => {
+      expect(new Instructions('2\n4\n0\n1\n-2\n').willGoOutOfBounds(5)).to.be.true
     })
   })
 

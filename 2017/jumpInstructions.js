@@ -16,6 +16,10 @@ class JumpInstructions {
     return i += inc
   }
   
+  willGoOutOfBounds(position) {
+    return !(this.instructions[position] <= (this.instructions.length - position) && this.instructions[position] >= -position)
+  }
+
 }
 
 module.exports = JumpInstructions
