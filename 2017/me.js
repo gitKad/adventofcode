@@ -26,16 +26,10 @@ class Me {
   followWeirdJumpInstructions(jumpInstructions) {
     var ji = new JumpInstructions(jumpInstructions)
     
-    var i = 0
+    var pos = 0
     var steps = 0
-    while(ji.instructions[i] <= (ji.instructions.length - i) && ji.instructions[i] >= -i) {  
-      let inc = ji.instructions[i]
-      if(inc >= 3) {
-        ji.instructions[i]--
-      } else {
-        ji.instructions[i]++
-      }    
-      i += inc
+    while(!ji.willGoOutOfBounds(pos)) {  
+      pos = ji.weirdJump(pos)
       steps++
     }
     return steps
