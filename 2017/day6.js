@@ -13,20 +13,19 @@ describe.only('On day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
-    memoryArea = new MemoryArea()
   })
 
   describe('My memory area', () => {
     it('can be built from a text input', () => {
-      expect(new MemoryArea('0 2 7 0\n')).to.be.an('array').with.lengthOf(4)
+      expect(new MemoryArea('0 2 7 0\n').area).to.be.an('array').with.lengthOf(4)
     })
 
     it('can tell the memory bank with the most blocks', () => {
       expect(new MemoryArea('0 2 7 0\n').bankWithMostBlocks).to.be.eql(2)
       expect(new MemoryArea('2 4 1 2\n').bankWithMostBlocks).to.be.eql(1)
-      expect(new MemoryArea('3 1 2 3\n').bankWithMostBlocks).to.be.eql(1)
+      expect(new MemoryArea('3 1 2 3\n').bankWithMostBlocks).to.be.eql(0)
       expect(new MemoryArea('0 2 3 4\n').bankWithMostBlocks).to.be.eql(3)
-      expect(new MemoryArea('1 3 4 1\n').bankWithMostBlocks).to.be.eql(3)
+      expect(new MemoryArea('1 3 4 1\n').bankWithMostBlocks).to.be.eql(2)
     })
 
     it('can redistribute a memory bank\'s blocks', () => {
@@ -63,7 +62,7 @@ describe.only('On day '+day+', ', () => {
       var aCC = new AdventOfCodeChatter()
       return aCC.getInput(day)
       .then((input) => {
-        expect(input).to.be.ok
+        expect(me.countRedistributionCycles(new MemoryArea(input)).to.be.eql(5))
       })
     })
   
@@ -71,7 +70,7 @@ describe.only('On day '+day+', ', () => {
       var aCC = new AdventOfCodeChatter()
       return aCC.getInput(day)
       .then((input) => {
-        expect(input).to.be.ok
+        expect(me.countRedistributionCycles(new MemoryArea(input)).to.be.eql(5)).to.be.ok
       })
     })
   })

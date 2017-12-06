@@ -6,17 +6,15 @@ class MemoryArea {
 
   constructor (text) {
 
-    this.data = text
-    .replace(/\n$/gm,'')
-    .split(/\n/g)
-    .map((current) => {
-      return current
-        .split(/\t/g)
-        .map(e => parseInt(e))
-    })
-
+    this.area = text
+      .replace(/\n$/gm,'')
+      .split(' ')
+      .map(e => parseInt(e))
   }
 
+  get bankWithMostBlocks() {
+    return this.area.reduce((idxOfMax,val,idx,arr) => (idxOfMax = val > arr[idxOfMax] ? idx : idxOfMax),0)
+  }
 }
 
 module.exports = MemoryArea
