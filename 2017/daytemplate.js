@@ -13,7 +13,6 @@ describe.skip('On day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
-    // thing = new Thing()
   })
 
   // describe('My thing', () => {
