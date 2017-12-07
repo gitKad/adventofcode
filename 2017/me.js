@@ -10,6 +10,17 @@ class Me {
 
   }
 
+  // Day 6 stuff
+  countRedistributionCycles(memoryArea) {
+    var cycles = 0
+    do {
+      memoryArea.redistribute()
+      cycles++
+    }
+    while(!memoryArea.hasEnteredInfiniteLoop)
+    return cycles
+  }
+
   // Day 5 stuff
   followJumpInstructions(jumpInstructions) {
     var ji = new JumpInstructions(jumpInstructions)
