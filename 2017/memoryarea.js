@@ -23,16 +23,16 @@ class MemoryArea {
   }
 
   redistribute() {
-    let memoryBankIndex = this.bankWithMostBlocks
-    let blocksToRedistribute = this.area[memoryBankIndex]
-    let insertionStep = 1
-
+    const memoryBankIndex = this.bankWithMostBlocks
+    const blocksToRedistribute = this.area[memoryBankIndex]
     this.savedMemoryPatterns.push(this.area.slice())
     this.area[memoryBankIndex] = 0
 
-    for (let insertionStep = 1; insertionStep <= blocksToRedistribute; insertionStep++) {
-      this.area[(memoryBankIndex+insertionStep)%this.area.length]++
-    }
+    this.area.map((_,idx,arr) => {
+      arr[idx] += ~~(blocksToRedistribute/this.area.length)
+      arr[idx] += (memoryBankIndex+idx+this.area.length-1)%this.area.length <= (blocksToRedistribute%this.area.length)-1 ? 1 : 0
+    })
+
     return this
   }
 

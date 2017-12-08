@@ -9,7 +9,7 @@ const Me = require('./me.js')
 const MemoryArea = require('./memoryarea.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe('On day '+day+', ', () => {
+describe.only('On day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
