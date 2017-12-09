@@ -1,6 +1,7 @@
 var chai = require('chai')
 var expect = require('chai').expect
-var chaiAsPromised = require("chai-as-promised")
+var chaiAsPromised = require('chai-as-promised')
+var sha1 = require('sha1')
 
 chai.use(chaiAsPromised);
 
@@ -39,9 +40,9 @@ describe.only('On day '+day+', ', () => {
 
     it('can save a memory bank size pattern', () => {
       let ma = new MemoryArea('0\t2\t7\t0\n')
-      expect(ma.savedPatterns).to.be.an('array').with.lengthOf(0)
+      expect(ma.savedPatterns).to.be.an('object').and.not.have.property(sha1('0270'))
       ma.redistribute()
-      expect(ma.savedPatterns).to.be.an('array').with.lengthOf(1).eql([[0, 2, 7, 0]])
+      expect(ma.savedPatterns).to.be.an('object').and.have.property(sha1('0270'))
     })
 
     it('can recognize a memory bank size pattern', () => {

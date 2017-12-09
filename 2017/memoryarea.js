@@ -1,6 +1,6 @@
 'use strict'
 
-var Promise = require('bluebird')
+var sha1 = require('sha1');
 
 class MemoryArea {
 
@@ -11,7 +11,7 @@ class MemoryArea {
       .split('\t')
       .map(e => parseInt(e))
 
-    this.savedPatterns = []
+    this.savedPatterns = {}
     this.cycles = 0
   }
 
@@ -20,7 +20,7 @@ class MemoryArea {
   }
 
   resetMemory() {
-    this.savedPatterns = []
+    this.savedPatterns = {}
     this.cycles = 0
   }
 
@@ -29,7 +29,7 @@ class MemoryArea {
     var blocksToRedistribute = this.area[memoryBankIndex]
     
     this.cycles++
-    this.savedPatterns.push(this.area.slice())
+    this.savedPatterns[sha1(this.area.join(''))] = 1
     this.area[memoryBankIndex] = 0
     this.area.map((_,idx,arr) => {
       arr[idx] += ~~(blocksToRedistribute/this.area.length)
@@ -40,7 +40,7 @@ class MemoryArea {
   }
 
   get hasEnteredInfiniteLoop() {
-    return (this.savedPatterns.find((e) => (e.join('') == this.area.join(''))) != undefined)
+    return this.savedPatterns[sha1(this.area.join(''))] >= 1
   }
 }
 
