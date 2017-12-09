@@ -60,7 +60,11 @@ describe.only('On day '+day+', ', () => {
       expect(me.countRedistributionCycles(new MemoryArea('0\t2\t7\t0\n'))).to.be.eql(5)
     })
 
-    it('can earn a silver star on day '+day, () => {
+    it('can count the number of cycles in an infinite loop', () => {
+      expect(me.countInfiniteLoopCycles(new MemoryArea('0\t2\t7\t0\n'))).to.be.eql(4)
+    })
+
+    it.skip('can earn a silver star on day '+day, () => {
       var aCC = new AdventOfCodeChatter()
       return aCC.getInput(day)
       .then((input) => {
@@ -72,7 +76,7 @@ describe.only('On day '+day+', ', () => {
       var aCC = new AdventOfCodeChatter()
       return aCC.getInput(day)
       .then((input) => {
-        expect(me.countRedistributionCycles(new MemoryArea(input)).to.be.eql(5)).to.be.ok
+        expect(me.countInfiniteLoopCycles(new MemoryArea(input))).to.be.eql(1695)
       })
     })
   })

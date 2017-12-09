@@ -12,13 +12,27 @@ class Me {
 
   // Day 6 stuff
   countRedistributionCycles(memoryArea) {
-    var cycles = 0
     do {
       memoryArea.redistribute()
-      cycles++
     }
     while(!memoryArea.hasEnteredInfiniteLoop)
-    return cycles
+    
+    return memoryArea.cycles
+  }
+
+  countInfiniteLoopCycles(memoryArea) {
+    do {
+      memoryArea.redistribute()
+    }
+    while(!memoryArea.hasEnteredInfiniteLoop)
+    
+    memoryArea.resetMemory()
+
+    do {
+      memoryArea.redistribute()
+    }
+    while(!memoryArea.hasEnteredInfiniteLoop)
+    return memoryArea.cycles
   }
 
   // Day 5 stuff
