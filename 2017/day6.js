@@ -10,7 +10,7 @@ const Me = require('./me.js')
 const MemoryArea = require('./memoryarea.js')
 var AdventOfCodeChatter = require('./adventOfCodeChatter.js')
 
-describe.only('On day '+day+', ', () => {
+describe('On day '+day+', ', () => {
 
   beforeEach(() => {
     me = new Me()
@@ -65,7 +65,7 @@ describe.only('On day '+day+', ', () => {
       expect(me.countInfiniteLoopCycles(new MemoryArea('0\t2\t7\t0\n'))).to.be.eql(4)
     })
 
-    it.skip('can earn a silver star on day '+day, () => {
+    it('can earn a silver star on day '+day, () => {
       var aCC = new AdventOfCodeChatter()
       return aCC.getInput(day)
       .then((input) => {
